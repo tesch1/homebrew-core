@@ -5,6 +5,7 @@
   "blast",
   "e2fsprogs",
   "gnuradio",
+  "gr-osmosdr",
   "hdf5-mpi",
   "lablgtk",
   "libvirt",
