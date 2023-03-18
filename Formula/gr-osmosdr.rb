@@ -7,10 +7,18 @@ class GrOsmosdr < Formula
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
+  depends_on "airspy"
+  depends_on "airspyhf"
+  depends_on "gmp"
   depends_on "gnuradio"
+  depends_on "hackrf"
+  depends_on "librtlsdr"
   depends_on "libsndfile"
   depends_on "pybind11"
+  depends_on "python@3.11"
   depends_on "soapysdr"
+  depends_on "uhd"
+  depends_on "volk"
 
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DENABLE_NONFREE=TRUE"
@@ -19,6 +27,6 @@ class GrOsmosdr < Formula
   end
 
   test do
-    system "false"
+    system Formula["python@3.11"].opt_bin/"python3.11", "-c", "import osmosdr"
   end
 end
