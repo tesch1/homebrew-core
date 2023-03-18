@@ -7,6 +7,7 @@ class GrOsmosdr < Formula
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
+  depends_on "pybind11" => :build
   depends_on "airspy"
   depends_on "airspyhf"
   depends_on "gmp"
@@ -14,7 +15,6 @@ class GrOsmosdr < Formula
   depends_on "hackrf"
   depends_on "librtlsdr"
   depends_on "libsndfile"
-  depends_on "pybind11"
   depends_on "python@3.11"
   depends_on "soapysdr"
   depends_on "uhd"
@@ -27,6 +27,18 @@ class GrOsmosdr < Formula
   end
 
   test do
-    system Formula["python@3.11"].opt_bin/"python3.11", "-c", "import osmosdr"
+    (testpath/"test.cpp").write <<~EOS
+      #include <osmosdr/device.h>
+      int main() {
+        osmosdr::device_t device;
+        return 0;
+      }
+    EOS
+    system ENV.cxx, "test.cpp", "-L#{lib}", "-lgnuradio-osmosdr", "-o", "test"
+    system "./test"
+
+    # Make sure GNU Radio's Python can find our module
+    (testpath/"testimport.py").write "import osmosdr\n"
+    system Formula["python@3.11"].opt_bin/"python3.11", testpath/"testimport.py"
   end
 end
