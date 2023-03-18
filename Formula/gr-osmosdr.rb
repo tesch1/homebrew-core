@@ -21,7 +21,7 @@ class GrOsmosdr < Formula
   depends_on "volk"
 
   def install
-    system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DENABLE_NONFREE=TRUE"
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DENABLE_NONFREE=TRUE", "-DENABLE_DOXYGEN=FALSE"
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
