@@ -20,6 +20,7 @@ class GrOsmosdr < Formula
   depends_on "uhd"
   depends_on "volk"
 
+  # PR: https://github.com/osmocom/gr-osmosdr/pull/25 - removes use of ancient 'register' keyword
   patch :DATA
 
   def install
